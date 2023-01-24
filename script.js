@@ -5,9 +5,19 @@ var context = canvas.getContext('2d');
 var cellLength = 16;
 
 //Startposition der Schlange
+var speedCounter
 var snake = {
-    x:0,
-    y:0
+    cells: [
+        {x:7,y:0},
+        {x:6,y:0},
+        {x:5,y:0},
+        {x:4,y:0},
+        {x:3,y:0},
+        {x:2,y:0},
+        {x:1,y:0},
+        {x:0,y:0},
+    ],
+    length: 8
 }
 
 function drawCell(x, y, color) {
@@ -16,14 +26,28 @@ function drawCell(x, y, color) {
 }
 
 // Funktion zum Bewegen der Schlange
+speedCounter=0
 function moveSnake (){
-    window.requestAnimationFrame(moveSnake) 
-    drawCell(snake.x,snake.y,'black')
-    snake.x=snake.x+1
-    if(snake.x>24){
-        snake.x=0
+    window.requestAnimationFrame(moveSnake)
+    speedCounter=speedCounter+1
+    if(speedCounter<6){
+        return
     }
-    drawCell(snake.x, snake.y,'green')
+    speedCounter=0
+
+
+    drawCell(snake.cells[snake.length-1].x, snake.cells[snake.length-1].y ,'black')
+    
+    var newX = snake.cells[0].x + 1
+    if(newX === 25){
+        newX=0
+    }
+
+    var newY = snake.cells[0].y;
+    snake.cells.unshift({x: newX, y: newY})
+    snake.cells.pop()
+    drawCell(snake.cells[0].x, snake.cells[0].y,'green')
 
 }
+
 moveSnake()
