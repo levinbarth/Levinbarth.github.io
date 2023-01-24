@@ -17,7 +17,9 @@ var snake = {
         {x:1,y:0},
         {x:0,y:0},
     ],
-    length: 8
+    length: 8,
+    direction: 'r'
+
 }
 
 function drawCell(x, y, color) {
@@ -50,4 +52,33 @@ function moveSnake (){
 
 }
 
+document.addEventListener('keydown', function(input) {
+    switch(input.key) {
+        case  'ArrowLeft':
+          if(snake.direction !== 'r') {
+            snake.direction = 'l';
+          }
+          break;
+    
+        case  'ArrowRight':
+            if(snake.direction !== 'l') {
+              snake.direction = 'r';
+            }
+            break;
+        
+        case  'ArrowUp':
+                if(snake.direction !== 'd') {
+                  snake.direction = 'u';
+                }
+                break;
+        
+         case  'ArrowDown':
+                     if(snake.direction !== 'u') {
+                      snake.direction = 'd';
+                    }
+                    break;
+        default:
+          // code block
+      }
+})
 moveSnake()
