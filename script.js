@@ -43,10 +43,27 @@ function getNewX(){
     return newX
   }
   return snake.cells[0].x
-
 }
+
+function getNewY(){
+  if(snake.direction === 'u'){
+    var newY = snake.cells[0].y + 1
+    if(newY === 25){
+        newY=0
+    }
+    return newY
+  }  
+  if(snake.direction === 'd'){
+    var newY = snake.cells[0].y - 1
+    if(newY === -1){
+        newY=24
+    }
+    return newY
+  }
+  return snake.cells[0].y
 function getNewY(){
     return 0
+}
 }
 // Funktion zum Bewegen der Schlange
 speedCounter=0
