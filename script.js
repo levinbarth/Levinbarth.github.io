@@ -27,6 +27,27 @@ function drawCell(x, y, color) {
     context.fillRect(x*cellLength, y*cellLength, cellLength-1, cellLength-1)
 }
 
+function getNewX(){
+  if(snake.direction === 'r'){
+    var newX = snake.cells[0].x + 1
+    if(newX === 25){
+        newX=0
+    }
+    return newX
+  }  
+  if(snake.direction === 'l'){
+    var newX = snake.cells[0].x - 1
+    if(newX === -1){
+        newX=24
+    }
+    return newX
+  }
+  return snake.cells[0].x
+
+}
+function getNewY(){
+    return 0
+}
 // Funktion zum Bewegen der Schlange
 speedCounter=0
 function moveSnake (){
@@ -45,7 +66,10 @@ function moveSnake (){
         newX=0
     }
 
-    var newY = snake.cells[0].y;
+
+    var newX = getNewX()
+    var newY = getNewY()
+
     snake.cells.unshift({x: newX, y: newY})
     snake.cells.pop()
     drawCell(snake.cells[0].x, snake.cells[0].y,'green')
