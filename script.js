@@ -7,7 +7,40 @@ var cellLength = 16;
 //Startposition der Schlange
 var speedCounter
 var snake
+var applePosition
 var newDirection
+
+function drawCell(x, y, color) {
+  context.fillStyle = color;
+  context.fillRect(x*cellLength, y*cellLength, cellLength-1, cellLength-1)
+}
+
+function doesSnakeContain(x, y){
+  var snakeContains = false
+  snake.cells.forEach(function (cell){
+    if(x===cell.x && y===cell.y){
+      snakeContains = true
+    }
+  })
+ return snakeContains
+}
+
+function getRandomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+function placeApple(){
+  var posX
+  var posY
+  do{
+    posX = getRandomInteger(0, 24)
+    posY = getRandomInteger(0, 24)
+  } while(doesSnakeContain(posX, posY))
+  drawCell(posX, posY, 'red')
+  applePosition = {
+    x: posX,
+    y: posY,
+  }
+}
 
 function resetGame(){
   context.clearRect(0,0,canvas.width,canvas.height)
@@ -27,13 +60,9 @@ function resetGame(){
     direction: 'r'
   }
   newDirection = 'r'
+  placeApple()
 }
 
-
-function drawCell(x, y, color) {
-    context.fillStyle = color;
-    context.fillRect(x*cellLength, y*cellLength, cellLength-1, cellLength-1)
-}
 
 function getNewX(){
   if(snake.direction === 'r'){
@@ -70,15 +99,6 @@ function getNewY(){
   }
   return snake.cells[0].y
 }
-function doesSnakeContain(x, y){
-  var snakeContains = false
-  snake.cells.forEach(function (cell){
-    if(x===cell.x && y===cell.y){
-      snakeContains = true
-    }
-  })
- return snakeContains
-}
 
 // Funktion zum Bewegen der Schlange
 function moveSnake (){
@@ -99,9 +119,15 @@ function moveSnake (){
       resetGame()
       return
     }
-
+    
     snake.cells.unshift({x: newX, y: newY})
-    snake.cells.pop()
+    if (newX === applePosition.x && newY === applePosition.y){
+      snake.length++
+      placeApple()
+    } else {
+      snake.cells.pop()
+    }
+
     drawCell(snake.cells[0].x, snake.cells[0].y,'green')
 
 }
