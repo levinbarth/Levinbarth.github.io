@@ -47,16 +47,10 @@ function resetGame(){
   speedCounter = 0
   snake = {
     cells: [
-        {x:7,y:0},
-        {x:6,y:0},
-        {x:5,y:0},
-        {x:4,y:0},
-        {x:3,y:0},
-        {x:2,y:0},
         {x:1,y:0},
         {x:0,y:0},
     ],
-    length: 8,
+    length: 2,
     direction: 'r'
   }
   newDirection = 'r'
@@ -109,6 +103,12 @@ function moveSnake (){
     }
     speedCounter=0
 
+    // Score ausgeben
+    // element in variable speichern document.getElementById('canvas-id')
+    // element textContent auf snake-länge setzen
+    var score = document.getElementById('score')
+    score.textContent = snake.length-2
+    // getItem
 
     drawCell(snake.cells[snake.length-1].x, snake.cells[snake.length-1].y ,'black')
   
@@ -116,6 +116,7 @@ function moveSnake (){
     var newX = getNewX()
     var newY = getNewY()
     if(doesSnakeContain(newX,newY)){
+      // setItem
       resetGame()
       return
     }

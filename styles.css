@@ -1,6 +1,6 @@
 h1 {
     color: blue;
-    font-family:'Times New Roman', Times, serif, "Lucida Sans Unicode", sans-serif;
+    font-family:'Courier New', Courier, monospace;
     font-size: 34px;
     text-decoration: underline;
     text-decoration-color: blue;
@@ -26,4 +26,15 @@ canvas {
     justify-content: center;
     display: flex;
     width: 100%;
+}
+
+#score {
+    width: 400px;
+    color: white;
+    text-align: right;
+}
+
+#scoreWrapper {
+    justify-content: center;
+    display: flex;
 }
