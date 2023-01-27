@@ -34,7 +34,14 @@ canvas {
     text-align: right;
 }
 
+.highScore {
+    width: 400px;
+    color: white;
+    text-align: right;
+}
+
 #scoreWrapper {
-    justify-content: center;
+    align-items: center;
     display: flex;
+    flex-direction: column;
 }

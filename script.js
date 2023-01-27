@@ -1,10 +1,10 @@
+//Helps
 'use-strict';
+
+//Variablen 
 var canvas = document.getElementById('canvas-id');
 var context = canvas.getContext('2d');
-
 var cellLength = 16;
-
-//Startposition der Schlange
 var speedCounter
 var snake
 var applePosition
@@ -25,6 +25,7 @@ function doesSnakeContain(x, y){
  return snakeContains
 }
 
+//Apple Random Place
 function getRandomInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
@@ -42,6 +43,7 @@ function placeApple(){
   }
 }
 
+//Reset Game
 function resetGame(){
   context.clearRect(0,0,canvas.width,canvas.height)
   speedCounter = 0
@@ -57,7 +59,7 @@ function resetGame(){
   placeApple()
 }
 
-
+//Richtung
 function getNewX(){
   if(snake.direction === 'r'){
     var newX = snake.cells[0].x + 1
@@ -109,18 +111,23 @@ function moveSnake (){
     var score = document.getElementById('score')
     score.textContent = snake.length-2
     // getItem
+    var highScore = document.getElementById('highScore')
+    highScore.textContent = localStorage.getItem("score");
 
+
+    //Hintere zeile fällt ab 
     drawCell(snake.cells[snake.length-1].x, snake.cells[snake.length-1].y ,'black')
   
     snake.direction = newDirection;
     var newX = getNewX()
     var newY = getNewY()
     if(doesSnakeContain(newX,newY)){
-      // setItem
+      localStorage.setItem("score", snake.length-2);
       resetGame()
       return
     }
     
+    //Apple POP
     snake.cells.unshift({x: newX, y: newY})
     if (newX === applePosition.x && newY === applePosition.y){
       snake.length++
@@ -132,7 +139,7 @@ function moveSnake (){
     drawCell(snake.cells[0].x, snake.cells[0].y,'green')
 
 }
-
+//Tasten Imput
 document.addEventListener('keydown', function(input) {
     switch(input.key) {
         case  'ArrowLeft':
