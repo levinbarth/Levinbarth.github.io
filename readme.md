@@ -29,4 +29,4 @@ counterMinusElem.addEventListener("click",()=>{
 
 function updateDisplay(){
     counterDisplayElem.innerHTML = count;
-};
+}; 

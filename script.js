@@ -95,25 +95,28 @@ function getNewY(){
   }
   return snake.cells[0].y
 }
-
+function writeScore(){
+  var highScore = document.getElementById('highScore')
+    highScore.textContent = localStorage.getItem("score");
+}
 // Funktion zum Bewegen der Schlange
 function moveSnake (){
-    window.requestAnimationFrame(moveSnake)
     speedCounter=speedCounter+1
     if(speedCounter<6){
+      window.requestAnimationFrame(moveSnake)
         return
     }
     speedCounter=0
-
+    //right Highscore
+    
+    
+    
     // Score ausgeben
     // element in variable speichern document.getElementById('canvas-id')
     // element textContent auf snake-länge setzen
-    var score = document.getElementById('score')
+    var score = document.getElementById('score');
     score.textContent = snake.length-2
-    // getItem
-    var highScore = document.getElementById('highScore')
-    highScore.textContent = localStorage.getItem("score");
-
+    
 
     //Hintere zeile fällt ab 
     drawCell(snake.cells[snake.length-1].x, snake.cells[snake.length-1].y ,'black')
@@ -122,8 +125,11 @@ function moveSnake (){
     var newX = getNewX()
     var newY = getNewY()
     if(doesSnakeContain(newX,newY)){
-      localStorage.setItem("score", snake.length-2);
-      resetGame()
+      // end game
+      if(highScore.textContent<snake.length-2){
+        localStorage.setItem('score', snake.length-2);
+      }
+      writeScore()
       return
     }
     
@@ -138,6 +144,7 @@ function moveSnake (){
 
     drawCell(snake.cells[0].x, snake.cells[0].y,'green')
 
+    window.requestAnimationFrame(moveSnake)
 }
 //Tasten Imput
 document.addEventListener('keydown', function(input) {
@@ -169,7 +176,11 @@ document.addEventListener('keydown', function(input) {
           // code block
       }
 })
+writeScore()
 
-// start game
-resetGame()
-moveSnake()
+var button = document.getElementById('clickButten')
+button.onclick = function () {
+  // start game
+  resetGame()
+  moveSnake()
+}
